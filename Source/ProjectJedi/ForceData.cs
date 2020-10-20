@@ -1,9 +1,6 @@
-﻿using AbilityUser;
-using RimWorld;
-using System;
+﻿using RimWorld;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Verse;
 
 namespace ProjectJedi
@@ -19,7 +16,7 @@ namespace ProjectJedi
         private int ticksUntilMeditate = 0;
         private float alignment;
 
-        private bool initialized = false;
+        private readonly bool initialized = false;
         public bool forcePowersInitialized = false;
 
         private List<ForceSkill> skills;
@@ -129,24 +126,24 @@ namespace ProjectJedi
 
         public ForceData(CompForceUser newUser)
         {
-            this.pawn = newUser.AbilityUser;
+            pawn = newUser.AbilityUser;
         }
 
         public void ExposeData()
         {
-            Scribe_References.Look<Pawn>(ref this.pawn, "forceDataPawn");
-            Scribe_Values.Look<float>(ref this.alignment, "forceDataAlignment", 0.5f);
-            Scribe_Values.Look<int>(ref this.level, "forceDataLevel", 0);
-            Scribe_Values.Look<int>(ref this.xp, "forceDataXp");
-            Scribe_Values.Look<bool>(ref this.forcePowersInitialized, "forceDataPowersInitialized", true);
-            Scribe_Values.Look<int>(ref this.abilityPoints, "forceDataAbilityPoints", 0);
-            Scribe_Values.Look<int>(ref this.ticksUntilMeditate, "forceDataTicksUntilMeditate", 0);
-            Scribe_Values.Look<int>(ref this.ticksUntilXPGain, "forceDataTicksUntilXPGain", -1);
-            Scribe_Values.Look<int>(ref this.ticksAffiliation, "forceDataTicksAffiliation", -1);
-            Scribe_Collections.Look<ForceSkill>(ref this.skills, "forceDataSkills", LookMode.Deep, new object[0]);
-            Scribe_Collections.Look<ForcePower>(ref this.powersDark, "forceDataPowersDark", LookMode.Deep, new object[0]);
-            Scribe_Collections.Look<ForcePower>(ref this.powersGray, "forceDataPowersGray", LookMode.Deep, new object[0]);
-            Scribe_Collections.Look<ForcePower>(ref this.powersLight, "forceDataPowersLight", LookMode.Deep, new object[0]);
+            Scribe_References.Look(ref pawn, "forceDataPawn");
+            Scribe_Values.Look(ref alignment, "forceDataAlignment", 0.5f);
+            Scribe_Values.Look(ref level, "forceDataLevel", 0);
+            Scribe_Values.Look(ref xp, "forceDataXp");
+            Scribe_Values.Look(ref forcePowersInitialized, "forceDataPowersInitialized", true);
+            Scribe_Values.Look(ref abilityPoints, "forceDataAbilityPoints", 0);
+            Scribe_Values.Look(ref ticksUntilMeditate, "forceDataTicksUntilMeditate", 0);
+            Scribe_Values.Look(ref ticksUntilXPGain, "forceDataTicksUntilXPGain", -1);
+            Scribe_Values.Look(ref ticksAffiliation, "forceDataTicksAffiliation", -1);
+            Scribe_Collections.Look(ref skills, "forceDataSkills", LookMode.Deep, new object[0]);
+            Scribe_Collections.Look(ref powersDark, "forceDataPowersDark", LookMode.Deep, new object[0]);
+            Scribe_Collections.Look(ref powersGray, "forceDataPowersGray", LookMode.Deep, new object[0]);
+            Scribe_Collections.Look(ref powersLight, "forceDataPowersLight", LookMode.Deep, new object[0]);
 
 
         }

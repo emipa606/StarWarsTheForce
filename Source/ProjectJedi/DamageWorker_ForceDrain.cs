@@ -9,21 +9,21 @@ namespace ProjectJedi
     {
         public override DamageResult Apply(DamageInfo dinfo, Thing thing)
         {
-            DamageResult result = new DamageWorker.DamageResult();
-            result.totalDamageDealt = 0f;
-            if (thing is ProjectJedi.PawnGhost)
+            DamageResult result = new DamageResult
+            {
+                totalDamageDealt = 0f
+            };
+            if (thing is PawnGhost)
             {
                 Messages.Message("PJ_ForceGhostResisted".Translate(), MessageTypeDefOf.NegativeEvent);
                 return result;
             }
 
-            Pawn pawn = thing as Pawn;
-            if (pawn != null)
+            if (thing is Pawn pawn)
             {
                 if (dinfo.Instigator != null)
                 {
-                    Pawn caster = dinfo.Instigator as Pawn;
-                    if (caster != null)
+                    if (dinfo.Instigator is Pawn caster)
                     {
                         CompForceUser victimForce = pawn.GetComp<CompForceUser>();
                         int maxInjuries = 2;
@@ -42,7 +42,7 @@ namespace ProjectJedi
                                     {
                                         //Turn 0.01f into 1, or 1.0 into 100.
                                         int victimForceInt = System.Convert.ToInt32(victimForcePool.CurLevel * 100);
-                                       //Log.Message("Victim Force Pool = " + victimForceInt.ToString());
+                                        //Log.Message("Victim Force Pool = " + victimForceInt.ToString());
                                         Need_ForcePool casterPool = caster.needs.TryGetNeed<Need_ForcePool>();
                                         if (casterPool != null)
                                         {
@@ -70,7 +70,7 @@ namespace ProjectJedi
                                pawn.Label
                             }), MessageTypeDefOf.SilentInput);
 
-                        foreach (BodyPartRecord rec in pawn.health.hediffSet.GetNotMissingParts().InRandomOrder<BodyPartRecord>())
+                        foreach (BodyPartRecord rec in pawn.health.hediffSet.GetNotMissingParts().InRandomOrder())
                         {
                             if (maxInjuries > 0)
                             {

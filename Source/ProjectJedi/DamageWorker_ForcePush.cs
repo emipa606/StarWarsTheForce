@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using RimWorld;
+﻿using RimWorld;
 using Verse;
 using UnityEngine;
 
@@ -42,11 +38,10 @@ namespace ProjectJedi
 
         public void PushEffect(Thing target, int distance, bool damageOnCollision = false)
         {
-            if (target != null && target is Pawn)
+            if (target != null && target is Pawn pawn)
             {
-                bool applyDamage;
-                Vector3 loc = PushResult(target, distance, out applyDamage);
-                if (((Pawn)target).RaceProps.Humanlike) ((Pawn)target).needs.mood.thoughts.memories.TryGainMemory(ThoughtDef.Named("PJ_ThoughtPush"), null);
+                Vector3 loc = PushResult(target, distance, out bool applyDamage);
+                if (pawn.RaceProps.Humanlike) pawn.needs.mood.thoughts.memories.TryGainMemory(ThoughtDef.Named("PJ_ThoughtPush"), null);
                 FlyingObject flyingObject = (FlyingObject)GenSpawn.Spawn(ThingDef.Named("PJ_PFlyingObject"), target.Position, target.Map);
                 if (applyDamage && damageOnCollision) flyingObject.Launch(Caster, new LocalTargetInfo(loc.ToIntVec3()), target, new DamageInfo(DamageDefOf.Blunt, Rand.Range(8,10)));
                 else flyingObject.Launch(Caster, new LocalTargetInfo(loc.ToIntVec3()), target);

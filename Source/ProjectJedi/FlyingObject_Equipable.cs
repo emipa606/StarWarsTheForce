@@ -1,8 +1,4 @@
 ﻿using RimWorld;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Verse;
 using Verse.Sound;
 
@@ -14,16 +10,14 @@ namespace ProjectJedi
         {
             if (flyingThing != null)
             {
-                GenSpawn.Spawn(flyingThing, this.Position, this.Map);
+                GenSpawn.Spawn(flyingThing, Position, Map);
                 if (launcher != null)
                 {
-                    Pawn equipper = launcher as Pawn;
-                    if (equipper != null)
+                    if (launcher is Pawn equipper)
                     {
                         if (equipper.equipment != null)
                         {
-                            ThingWithComps flyingThingWithComps = flyingThing as ThingWithComps;
-                            if (flyingThingWithComps != null)
+                            if (flyingThing is ThingWithComps flyingThingWithComps)
                             {
                                 Equip(equipper, flyingThingWithComps);
                             }
@@ -31,7 +25,7 @@ namespace ProjectJedi
                     }
                 }
             }
-            this.Destroy(DestroyMode.Vanish);
+            Destroy(DestroyMode.Vanish);
         }
 
         public void Equip(Pawn equipper, ThingWithComps thingWithComps)

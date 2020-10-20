@@ -1,9 +1,7 @@
 ﻿using HarmonyLib;
 using RimWorld;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using UnityEngine;
 using Verse;
 
@@ -12,12 +10,12 @@ namespace ProjectJedi
     public class ForceCardUtility
     {
         // RimWorld.CharacterCardUtility
-        public static Vector2 forceCardSize = default(Vector2);
+        public static Vector2 forceCardSize = default;
         public static Vector2 ForceCardSize
         {
             get
             {
-                if (forceCardSize == default(Vector2))
+                if (forceCardSize == default)
                 {
                     forceCardSize = new Vector2(395f, 536f);
                     if (LanguageDatabase.activeLanguage == LanguageDatabase.AllLoadedLanguages.FirstOrDefault(x => x.folderName == "German"))
@@ -401,14 +399,14 @@ namespace ProjectJedi
             {
                 
                 Rect buttonRect = new Rect(inRect.x, buttonYOffset, ForceButtonSize, ForceButtonSize);
-                TooltipHandler.TipRegion(buttonRect, () => power.abilityDef.label + "\n\n" + power.abilityDef.description + "\n\n" + "PJ_CheckStarsForMoreInfo".Translate(), 398462);
+                TooltipHandler.TipRegion(buttonRect, () => power.AbilityDef.label + "\n\n" + power.AbilityDef.description + "\n\n" + "PJ_CheckStarsForMoreInfo".Translate(), 398462);
                 if (compForce.ForceData.AbilityPoints == 0 || power.level >= 3)
                 {
                     Widgets.DrawTextureFitted(buttonRect, power.Icon, 1.0f);
                 }
                 else if(Widgets.ButtonImage(buttonRect, power.Icon) && (compForce.AbilityUser.Faction == Faction.OfPlayer))
                 {
-                    ForceAbilityDef powerDef = power.nextLevelAbilityDef as ForceAbilityDef;
+                    ForceAbilityDef powerDef = power.NextLevelAbilityDef as ForceAbilityDef;
                     if (powerDef.requiredAlignmentType != ForceAlignmentType.None &&
                         powerDef.requiredAlignmentType != compForce.ForceAlignmentType)
                     {
@@ -444,7 +442,7 @@ namespace ProjectJedi
                         }), MessageTypeDefOf.RejectInput);
                         return;
                     }
-                    if (compForce.AbilityUser.story != null && (compForce.AbilityUser.WorkTagIsDisabled(WorkTags.Violent) && power.abilityDef.MainVerb.isViolent))
+                    if (compForce.AbilityUser.story != null && (compForce.AbilityUser.WorkTagIsDisabled(WorkTags.Violent) && power.AbilityDef.MainVerb.isViolent))
                     {
                         Messages.Message("IsIncapableOfViolenceLower".Translate(new object[]
                         {
@@ -471,12 +469,11 @@ namespace ProjectJedi
                     {
                         Widgets.DrawTextureFitted(powerRegion, TexButton.PJTex_ForcePointDim, 1.0f);
                     }
-                    ForceAbilityDef powerDef = power.GetAbilityDef(i) as ForceAbilityDef;
-                    if (powerDef != null)
+                    if (power.GetAbilityDef(i) is ForceAbilityDef powerDef)
                     {
-                        TooltipHandler.TipRegion(powerRegion, () => powerDef.GetDescription() + "\n" + compForce.PostAbilityVerbCompDesc(powerDef.MainVerb) + "\n" + powerDef.GetPointDesc() , 398462);
+                        TooltipHandler.TipRegion(powerRegion, () => powerDef.GetDescription() + "\n" + compForce.PostAbilityVerbCompDesc(powerDef.MainVerb) + "\n" + powerDef.GetPointDesc(), 398462);
                     }
-                
+
                 }
                 buttonYOffset += ForceButtonSize + 1;
             }

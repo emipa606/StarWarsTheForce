@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using RimWorld;
+﻿using RimWorld;
 using Verse;
 
 namespace ProjectJedi
@@ -63,15 +59,13 @@ namespace ProjectJedi
             }
             else if (target is Pawn)
             {
-                Pawn pawnTarget = target as Pawn;
-                if (pawnTarget != null)
+                if (target is Pawn pawnTarget)
                 {
                     if (pawnTarget.equipment != null)
                     {
                         if (pawnTarget.equipment.Primary != null)
                         {
-                            ThingWithComps droppedEquip = null;
-                            pawnTarget.equipment.TryDropEquipment(pawnTarget.equipment.Primary, out droppedEquip, pawnTarget.Position.RandomAdjacentCell8Way(), false);
+                            pawnTarget.equipment.TryDropEquipment(pawnTarget.equipment.Primary, out ThingWithComps droppedEquip, pawnTarget.Position.RandomAdjacentCell8Way(), false);
                             if (droppedEquip != null)
                             {
                                 if (pawnTarget.RaceProps.Humanlike) pawnTarget.needs.mood.thoughts.memories.TryGainMemory(ThoughtDef.Named("PJ_ThoughtPull"), null);
@@ -83,7 +77,7 @@ namespace ProjectJedi
                         {
                             if (pawnTarget.RaceProps.Humanlike) pawnTarget.needs.mood.thoughts.memories.TryGainMemory(ThoughtDef.Named("PJ_ThoughtPull"), null);
                             FlyingObject flyingObject = (FlyingObject)GenSpawn.Spawn(ThingDef.Named("PJ_PFlyingObject"), target.Position, target.Map);
-                            flyingObject.Launch(Caster, Caster, pawnTarget);    
+                            flyingObject.Launch(Caster, Caster, pawnTarget);
                         }
                     }
                     else

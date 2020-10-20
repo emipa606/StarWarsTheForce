@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 using RimWorld;
 using UnityEngine;
@@ -17,7 +16,7 @@ namespace ProjectJedi
         Surging
     }
 
-    public class Need_ForcePool : RimWorld.Need
+    public class Need_ForcePool : Need
     {
         public const float BaseGainPerTickRate = 150f;
         public const float BaseFallPerTick = 1E-05f;
@@ -34,19 +33,19 @@ namespace ProjectJedi
         {
             get
             {
-                if (this.CurLevel < 0.01f)
+                if (CurLevel < 0.01f)
                 {
                     return ForcePoolCategory.Drained;
                 }
-                if (this.CurLevel < 0.3f)
+                if (CurLevel < 0.3f)
                 {
                     return ForcePoolCategory.Feeble;
                 }
-                if (this.CurLevel < 0.5f)
+                if (CurLevel < 0.5f)
                 {
                     return ForcePoolCategory.Steady;
                 }
-                if (this.CurLevel < 0.7f)
+                if (CurLevel < 0.7f)
                 {
                     return ForcePoolCategory.Strong;
                 }
@@ -63,7 +62,7 @@ namespace ProjectJedi
         {
             get
             {
-                return this.GainingNeed ? 1 : -1;
+                return GainingNeed ? 1 : -1;
             }
         }
 
@@ -71,7 +70,7 @@ namespace ProjectJedi
         {
             get
             {
-                return this.CurLevel;
+                return CurLevel;
             }
         }
 
@@ -79,37 +78,39 @@ namespace ProjectJedi
         {
             get
             {
-                return Find.TickManager.TicksGame < this.lastGainTick + 10;
+                return Find.TickManager.TicksGame < lastGainTick + 10;
             }
         }
 
         public Need_ForcePool(Pawn pawn) : base(pawn)
         {
-            this.lastGainTick = -999;
-            this.threshPercents = new List<float>();
-            this.threshPercents.Add(ThreshLow);
-            this.threshPercents.Add(ThreshHigh);
+            lastGainTick = -999;
+            threshPercents = new List<float>
+            {
+                ThreshLow,
+                ThreshHigh
+            };
         }
 
         public override void SetInitialLevel()
         {
-            this.CurLevel = ThreshSatisfied;
+            CurLevel = ThreshSatisfied;
         }
 
         public void GainNeed(float amount)
         {
             amount /= 120f;
             amount *= 0.01f;
-            amount = Mathf.Min(amount, 1f - this.CurLevel);
-            this.curLevelInt += amount;
-            this.lastGainTick = Find.TickManager.TicksGame;
+            amount = Mathf.Min(amount, 1f - CurLevel);
+            curLevelInt += amount;
+            lastGainTick = Find.TickManager.TicksGame;
         }
 
         public void UseForcePower(float amount)
         {
             //Log.Message(this.curLevelInt.ToString());
             //Log.Message(amount.ToString());
-            this.curLevelInt = Mathf.Clamp(this.curLevelInt - amount, 0f, 1.0f);
+            curLevelInt = Mathf.Clamp(curLevelInt - amount, 0f, 1.0f);
             //Log.Message(this.curLevelInt.ToString());
 
         }
@@ -138,7 +139,7 @@ namespace ProjectJedi
             {
                 Widgets.DrawHighlight(rect);
             }
-            TooltipHandler.TipRegion(rect, new TipSignal(() => this.GetTipString(), rect.GetHashCode()));
+            TooltipHandler.TipRegion(rect, new TipSignal(() => GetTipString(), rect.GetHashCode()));
             float num2 = 14f;
             float num3 = num2 + 15f;
             if (rect.height < 50f)
@@ -148,28 +149,28 @@ namespace ProjectJedi
             Text.Font = ((rect.height <= 55f) ? GameFont.Tiny : GameFont.Small);
             Text.Anchor = TextAnchor.LowerLeft;
             Rect rect2 = new Rect(rect.x + num3 + rect.width * 0.1f, rect.y, rect.width - num3 - rect.width * 0.1f, rect.height / 2f);
-            Widgets.Label(rect2, this.LabelCap);
+            Widgets.Label(rect2, LabelCap);
             Text.Anchor = TextAnchor.UpperLeft;
             Rect rect3 = new Rect(rect.x, rect.y + rect.height / 2f, rect.width, rect.height / 2f);
             rect3 = new Rect(rect3.x + num3, rect3.y, rect3.width - num3 * 2f, rect3.height - num2);
-            Widgets.FillableBar(rect3, this.CurLevelPercentage);
+            Widgets.FillableBar(rect3, CurLevelPercentage);
             //else Widgets.FillableBar(rect3, this.CurLevelPercentage);
             //Widgets.FillableBarChangeArrows(rect3, this.GUIChangeArrow);
-            if (this.threshPercents != null)
+            if (threshPercents != null)
             {
-                for (int i = 0; i < this.threshPercents.Count; i++)
+                for (int i = 0; i < threshPercents.Count; i++)
                 {
-                    this.DrawBarThreshold(rect3, this.threshPercents[i]);
+                    DrawBarThreshold(rect3, threshPercents[i]);
                 }
             }
-            float curInstantLevelPercentage = this.CurInstantLevelPercentage;
+            float curInstantLevelPercentage = CurInstantLevelPercentage;
             if (curInstantLevelPercentage >= 0f)
             {
-                this.DrawBarInstantMarkerAt(rect3, curInstantLevelPercentage);
+                DrawBarInstantMarkerAt(rect3, curInstantLevelPercentage);
             }
-            if (!this.def.tutorHighlightTag.NullOrEmpty())
+            if (!def.tutorHighlightTag.NullOrEmpty())
             {
-                UIHighlighter.HighlightOpportunity(rect, this.def.tutorHighlightTag);
+                UIHighlighter.HighlightOpportunity(rect, def.tutorHighlightTag);
             }
             Text.Font = GameFont.Small;
         }
@@ -179,7 +180,7 @@ namespace ProjectJedi
             float num = (float)((barRect.width <= 60f) ? 1 : 2);
             Rect position = new Rect(barRect.x + barRect.width * threshPct - (num - 1f), barRect.y + barRect.height / 2f, num, barRect.height / 2f);
             Texture2D image;
-            if (threshPct < this.CurLevelPercentage)
+            if (threshPct < CurLevelPercentage)
             {
                 image = BaseContent.BlackTex;
                 GUI.color = new Color(1f, 1f, 1f, 0.9f);

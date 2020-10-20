@@ -1,10 +1,6 @@
 ﻿using AbilityUser;
 using HarmonyLib;
 using RimWorld;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 using Verse;
 using Verse.Sound;
@@ -30,13 +26,13 @@ namespace ProjectJedi
             if (!thrown)
             {
                 thrown = true;
-                this.strikeLoc = strikeZone;
+                strikeLoc = strikeZone;
                 SoundDefOf.Thunder_OffMap.PlayOneShotOnCamera();
                 //if (!strikeLoc.IsValid)
                 //{
                 //    strikeLoc = CellFinderLoose.RandomCellWith((IntVec3 sq) => sq.Standable(victim.Map) && !victim.Map.roofGrid.Roofed(sq), victim.Map, 1000);
                 //}
-                this.boltMesh = LightningBoltMeshPool.RandomBoltMesh;
+                boltMesh = LightningBoltMeshPool.RandomBoltMesh;
                 GenExplosion.DoExplosion(strikeLoc, victim.Map, 1.9f, DamageDefOf.Flame, null, -1, -1f, null, null, null, null, null,  0f, 1, false, null, 0f, 1);
                 Vector3 loc = strikeLoc.ToVector3Shifted();
                 for (int i = 0; i < 4; i++)
@@ -54,12 +50,11 @@ namespace ProjectJedi
         {
             if (hitThing != null)
             {
-                    Pawn victim = hitThing as Pawn;
-                    if (victim != null)
-                    {
-                            this.duration = Rand.Range(30, 60);
-                            ThrowBolt(victim.Position, victim);
-                    }
+                if (hitThing is Pawn victim)
+                {
+                    duration = Rand.Range(30, 60);
+                    ThrowBolt(victim.Position, victim);
+                }
             }
         }
 
@@ -73,11 +68,11 @@ namespace ProjectJedi
         {
             get
             {
-                if (this.age <= 3)
+                if (age <= 3)
                 {
-                    return (float)this.age / 3f;
+                    return (float)age / 3f;
                 }
-                return 1f - (float)this.age / (float)this.duration;
+                return 1f - (float)age / (float)duration;
             }
         }
 
@@ -85,7 +80,7 @@ namespace ProjectJedi
         {
             if (boltMesh != null)
             {
-                Graphics.DrawMesh(this.boltMesh, this.strikeLoc.ToVector3ShiftedWithAltitude(AltitudeLayer.Weather), Quaternion.identity, FadedMaterialPool.FadedVersionOf((Material)AccessTools.Field(typeof(WeatherEvent_LightningStrike), "LightningMat").GetValue(null), LightningBrightness), 0);
+                Graphics.DrawMesh(boltMesh, strikeLoc.ToVector3ShiftedWithAltitude(AltitudeLayer.Weather), Quaternion.identity, FadedMaterialPool.FadedVersionOf((Material)AccessTools.Field(typeof(WeatherEvent_LightningStrike), "LightningMat").GetValue(null), LightningBrightness), 0);
             }
             //base.Comps_PostDraw();
         }

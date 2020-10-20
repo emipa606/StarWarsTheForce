@@ -1,7 +1,5 @@
-﻿using System;
-using Verse;
+﻿using Verse;
 using Verse.AI;
-using Verse.AI.Group;
 using RimWorld;
 using System.Collections.Generic;
 
@@ -14,7 +12,7 @@ namespace ProjectJedi
         public override ThinkNode DeepCopy(bool resolve = true)
         {
             JobGiver_ForceMeditation jobGiver_ForceMeditation = (JobGiver_ForceMeditation)base.DeepCopy(resolve);
-            jobGiver_ForceMeditation.minCategory = this.minCategory;
+            jobGiver_ForceMeditation.minCategory = minCategory;
             return jobGiver_ForceMeditation;
         }
 
@@ -108,8 +106,7 @@ namespace ProjectJedi
 
         protected override Job TryGiveJob(Pawn pawn)
         {
-            Thing padResult = null;
-            IntVec3 c = ResolveMeditationLocation(pawn, out padResult);
+            IntVec3 c = ResolveMeditationLocation(pawn, out Thing padResult);
             CompForceUser compForce = pawn.TryGetComp<CompForceUser>();
             compForce.ForceData.TicksUntilMeditate = Find.TickManager.TicksGame + 6000;
             if (padResult != null) return new Job(DefDatabase<JobDef>.GetNamed("PJ_ForceMeditationJob"), padResult);

@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using Verse;
 
 namespace ProjectJedi
@@ -20,21 +19,21 @@ namespace ProjectJedi
 
         public override GizmoResult GizmoOnGUI(Vector2 topLeft, float maxWidth)
         {
-            Rect overRect = new Rect(topLeft.x, topLeft.y, this.GetWidth(maxWidth), 75f);
+            Rect overRect = new Rect(topLeft.x, topLeft.y, GetWidth(maxWidth), 75f);
             Find.WindowStack.ImmediateWindow(984688, overRect, WindowLayer.GameUI, delegate
             {
                 Rect rect = overRect.AtZero().ContractedBy(6f);
                 Rect rect2 = rect;
                 rect2.height = overRect.height / 2f;
                 Text.Font = GameFont.Tiny;
-                Widgets.Label(rect2, this.shield.labelCap);
+                Widgets.Label(rect2, shield.LabelCap);
                 Rect rect3 = rect;
                 rect3.yMin = overRect.height / 2f;
-                float fillPercent = this.shield.Energy / Mathf.Max(1f, this.shield.EnergyMax);
+                float fillPercent = shield.Energy / Mathf.Max(1f, shield.EnergyMax);
                 Widgets.FillableBar(rect3, fillPercent, Gizmo_HediffShieldStatus.FullShieldBarTex, Gizmo_HediffShieldStatus.EmptyShieldBarTex, false);
                 Text.Font = GameFont.Small;
                 Text.Anchor = TextAnchor.MiddleCenter;
-                Widgets.Label(rect3, (this.shield.Energy * 100f).ToString("F0") + " / " + (this.shield.EnergyMax * 100f).ToString("F0"));
+                Widgets.Label(rect3, (shield.Energy * 100f).ToString("F0") + " / " + (shield.EnergyMax * 100f).ToString("F0"));
                 Text.Anchor = TextAnchor.UpperLeft;
             }, true, false, 1f);
             return new GizmoResult(GizmoState.Clear);

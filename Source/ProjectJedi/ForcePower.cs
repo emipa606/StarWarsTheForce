@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using UnityEngine;
 using Verse;
 using AbilityUser;
@@ -28,7 +26,7 @@ namespace ProjectJedi
             }
             return result;
         }
-        public AbilityDef abilityDef
+        public AbilityDef AbilityDef
         {
             get
             {
@@ -47,7 +45,7 @@ namespace ProjectJedi
                 return result;
             }
         }
-        public AbilityDef nextLevelAbilityDef
+        public AbilityDef NextLevelAbilityDef
         {
             get
             {
@@ -71,7 +69,7 @@ namespace ProjectJedi
 
         public AbilityDef HasAbilityDef(AbilityDef defToFind)
         {
-            return this.abilityDefs.FirstOrDefault((AbilityDef x) => x == defToFind);
+            return abilityDefs.FirstOrDefault((AbilityDef x) => x == defToFind);
         }
 
         public ForcePower()
@@ -83,7 +81,7 @@ namespace ProjectJedi
         {
             get
             {
-                return abilityDef.uiIcon;
+                return AbilityDef.uiIcon;
             }
         }
 
@@ -97,9 +95,9 @@ namespace ProjectJedi
 
         public void ExposeData()
         {
-            Scribe_Values.Look<int>(ref level, "level", 0);
-            Scribe_Values.Look<int>(ref this.ticksUntilNextCast, "ticksUntilNextCast", -1);
-            Scribe_Collections.Look<AbilityDef>(ref abilityDefs, "abilityDefs", LookMode.Def, null);
+            Scribe_Values.Look(ref level, "level", 0);
+            Scribe_Values.Look(ref ticksUntilNextCast, "ticksUntilNextCast", -1);
+            Scribe_Collections.Look(ref abilityDefs, "abilityDefs", LookMode.Def, null);
         }
     }
 }

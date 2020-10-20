@@ -8,16 +8,17 @@ namespace ProjectJedi
     {
         public override DamageResult Apply(DamageInfo dinfo, Thing thing)
         {
-            DamageResult result = new DamageWorker.DamageResult();
-            result.totalDamageDealt = 0f;
-            if (thing is ProjectJedi.PawnGhost)
+            DamageResult result = new DamageResult
+            {
+                totalDamageDealt = 0f
+            };
+            if (thing is PawnGhost)
             {
                 Messages.Message("PJ_ForceGhostResisted".Translate(), MessageTypeDefOf.NegativeEvent);
                 return result;
             }
 
-            Pawn pawn = thing as Pawn;
-            if (pawn != null)
+            if (thing is Pawn pawn)
             {
                 int maxInjuries = 6;
                 int maxInjuriesPerBodypart;

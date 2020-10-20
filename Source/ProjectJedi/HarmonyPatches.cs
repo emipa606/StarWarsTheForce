@@ -3,10 +3,8 @@ using RimWorld;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Verse;
 using Verse.AI;
-using System.Reflection;
 using UnityEngine;
 
 namespace ProjectJedi
@@ -73,7 +71,7 @@ namespace ProjectJedi
             }
         }
 
-        public static IEnumerable<Gizmo> gizmoGetter(HediffComp_Shield compHediffShield)
+        public static IEnumerable<Gizmo> GizmoGetter(HediffComp_Shield compHediffShield)
         {
             if (compHediffShield.GetWornGizmos() != null)
             {
@@ -97,7 +95,7 @@ namespace ProjectJedi
                 HediffComp_Shield shield = shieldHediff?.TryGetComp<HediffComp_Shield>();
                 if (shield != null)
                 {
-                    __result = __result.Concat<Gizmo>(gizmoGetter(shield));
+                    __result = __result.Concat(GizmoGetter(shield));
                 }
             }
         }

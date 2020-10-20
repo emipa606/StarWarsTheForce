@@ -1,5 +1,4 @@
 ﻿using RimWorld;
-using System;
 using UnityEngine;
 using Verse;
 
@@ -18,8 +17,7 @@ namespace ProjectJedi
                 }
                 else
                 {
-                    Corpse corpse = base.SelThing as Corpse;
-                    if (corpse != null)
+                    if (base.SelThing is Corpse corpse)
                     {
                         pawn = corpse.InnerPawn;
                     }
@@ -50,14 +48,14 @@ namespace ProjectJedi
 
         public ITab_Pawn_Force()
         {
-            this.size = ForceCardUtility.ForceCardSize + new Vector2(17f, 17f) * 2f;
-            this.labelKey = "PJ_TabForce";
+            size = ForceCardUtility.ForceCardSize + new Vector2(17f, 17f) * 2f;
+            labelKey = "PJ_TabForce";
         }
 
         protected override void FillTab()
         {
             Rect rect = new Rect(17f, 17f, ForceCardUtility.ForceCardSize.x, ForceCardUtility.ForceCardSize.y);
-            ForceCardUtility.DrawForceCard(rect, this.PawnToShowInfoAbout);
+            ForceCardUtility.DrawForceCard(rect, PawnToShowInfoAbout);
         }
     }
 }

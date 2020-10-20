@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using Verse;
 using Verse.AI;
@@ -25,18 +24,18 @@ namespace ProjectJedi
             {
                 initAction = delegate
                 {
-                    this.faceDir = ((!this.job.def.faceDir.IsValid) ? Rot4.Random : this.job.def.faceDir);
+                    faceDir = ((!job.def.faceDir.IsValid) ? Rot4.Random : job.def.faceDir);
 
                 },
                 tickAction = delegate
                 {
-                    this.pawn.rotationTracker.FaceCell(this.pawn.Position + this.faceDir.FacingCell);
-                    this.pawn.GainComfortFromCellIfPossible();
-                    if (this.pawn.TryGetComp<CompForceUser>() != null)
+                    pawn.rotationTracker.FaceCell(pawn.Position + faceDir.FacingCell);
+                    pawn.GainComfortFromCellIfPossible();
+                    if (pawn.TryGetComp<CompForceUser>() != null)
                     {
-                        CompForceUser forceComp = this.pawn.GetComp<CompForceUser>();
+                        CompForceUser forceComp = pawn.GetComp<CompForceUser>();
                         if (Find.TickManager.TicksGame % 60 == 0) forceComp.ForceUserXP++;
-                        Need_ForcePool poolForce = this.pawn.needs.TryGetNeed<Need_ForcePool>();
+                        Need_ForcePool poolForce = pawn.needs.TryGetNeed<Need_ForcePool>();
                         if (poolForce != null)
                         {
                             if (poolForce.CurLevel < 0.99f)
@@ -45,7 +44,7 @@ namespace ProjectJedi
                             }
                             else
                             {
-                                this.EndJobWith(JobCondition.Succeeded);
+                                EndJobWith(JobCondition.Succeeded);
                             }
                         }
                     }
@@ -59,7 +58,7 @@ namespace ProjectJedi
         public override void ExposeData()
         {
             base.ExposeData();
-            Scribe_Values.Look<Rot4>(ref this.faceDir, "faceDir", default(Rot4), false);
+            Scribe_Values.Look(ref faceDir, "faceDir", default, false);
         }
     }
 }

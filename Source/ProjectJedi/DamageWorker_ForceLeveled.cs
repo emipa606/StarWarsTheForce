@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using RimWorld;
+﻿using RimWorld;
 using Verse;
 
 namespace ProjectJedi
@@ -37,9 +33,11 @@ namespace ProjectJedi
         
         public override DamageResult Apply(DamageInfo dinfo, Thing victim)
         {
-            DamageResult result = new DamageWorker.DamageResult();
-            result.totalDamageDealt = 0f;
-            if (victim is ProjectJedi.PawnGhost)
+            DamageResult result = new DamageResult
+            {
+                totalDamageDealt = 0f
+            };
+            if (victim is PawnGhost)
             {
                 Messages.Message("PJ_ForceGhostResisted".Translate(), MessageTypeDefOf.NegativeEvent);
                 return result;
@@ -59,7 +57,7 @@ namespace ProjectJedi
                     MasterEffect(victim);
                     break;
                 default:
-                    Log.Error(this.def.label + " only works with damages 1, 2, or 3");
+                    Log.Error(def.label + " only works with damages 1, 2, or 3");
                     break;
             }
             return result;

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using RimWorld;
 using Verse;
 using Verse.AI;
@@ -22,7 +19,7 @@ namespace ProjectJedi
             {
 
                 CompForceUser compForce = selPawn.TryGetComp<CompForceUser>();
-                Action meditate = delegate
+                void meditate()
                 {
                     if (selPawn.CanReserveAndReach(this, PathEndMode.ClosestTouch, Danger.Deadly))
                     {
@@ -31,7 +28,7 @@ namespace ProjectJedi
                         selPawn.jobs.TryTakeOrderedJob(newJob);
                         selPawn.mindState.ResetLastDisturbanceTick();
                     }
-                };
+                }
 
                 if (!selPawn.CanReserve(this))
                 {

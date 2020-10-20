@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Text;
 using Verse;
 
 namespace ProjectJedi
@@ -25,27 +22,26 @@ namespace ProjectJedi
 
         public string GetPointDesc()
         {
-            string result = "";
             StringBuilder s = new StringBuilder();
             s.AppendLine("PJ_PointsRequired".Translate(new object[]
                 {
-                this.abilityPoints
+                abilityPoints
                 }));
             if (darksideTreePointsRequired > 0)
             {
                 s.AppendLine("PJ_DarkPointsRequired".Translate(new object[]
                 {
-                    this.darksideTreePointsRequired
+                    darksideTreePointsRequired
                 }));
             }
             if (lightsideTreePointsRequired > 0)
             {
                 s.AppendLine("PJ_LightPointsRequired".Translate(new object[]
                 {
-                    this.lightsideTreePointsRequired
+                    lightsideTreePointsRequired
                 }));
             }
-            result = s.ToString();
+            string result = s.ToString();
             return result;
         }
     }

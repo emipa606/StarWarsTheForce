@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Text;
 using RimWorld;
 using Verse;
@@ -11,7 +9,7 @@ namespace ProjectJedi
 {
     public class ForceAbility : PawnAbility
     {
-        public CompForceUser ForceUser => ForceUtility.GetForceUser(this.Pawn);
+        public CompForceUser ForceUser => ForceUtility.GetForceUser(Pawn);
         public ForceAbilityDef ForceDef => Def as ForceAbilityDef;
 
         public ForceAbility() : base()
@@ -26,7 +24,7 @@ namespace ProjectJedi
 
         public ForceAbility(AbilityData abilityData) : base(abilityData)
         {
-            this.abilityUser = abilityData.Pawn.AllComps.FirstOrDefault(x => x.GetType() == abilityData.AbilityClass) as CompForceUser;
+            abilityUser = abilityData.Pawn.AllComps.FirstOrDefault(x => x.GetType() == abilityData.AbilityClass) as CompForceUser;
         }
 
 
@@ -71,7 +69,6 @@ namespace ProjectJedi
                 StringBuilder postDesc = new StringBuilder();
                 string alignDesc = "";
                 string changeDesc = "";
-                string pointsDesc = "";
                 //Log.Message("3");
 
                 if (forceDef?.changedAlignmentType != ForceAlignmentType.None)
@@ -94,14 +91,14 @@ namespace ProjectJedi
                     Mathf.Abs(forceDef.changedAlignmentRate).ToString("0.##")
                     });
                 }
+                string pointsDesc;
                 //Log.Message("5");
 
                 if (ForceUser?.ForceSkillLevel("PJ_ForcePool") > 0)
                 {
-                //Log.Message("5a");
-                    float poolCost = 0f;
+                    //Log.Message("5a");
                     //Log.Message("PC" + forceDef.forcePoolCost.ToString());
-                    poolCost = forceDef.forcePoolCost - (forceDef.forcePoolCost * (0.15f * (float)ForceUser.ForceSkillLevel("PJ_ForcePool")));
+                    float poolCost = forceDef.forcePoolCost - (forceDef.forcePoolCost * (0.15f * (float)ForceUser.ForceSkillLevel("PJ_ForcePool")));
                     pointsDesc = "ForceAbilityDescOriginPoints".Translate(new object[]
                     {
                     Mathf.Abs(forceDef.forcePoolCost).ToString("0.##")
@@ -117,7 +114,7 @@ namespace ProjectJedi
                 }
                 else
                 {
-                //Log.Message("6");
+                    //Log.Message("6");
 
                     pointsDesc = "ForceAbilityDescPoints".Translate(new object[]
                     {
@@ -141,34 +138,34 @@ namespace ProjectJedi
             if (base.CanCastPowerCheck(context, out reason))
             {
                 reason = "";
-                if (this.Def != null && this.Def is ForceAbilityDef forceDef)
+                if (Def != null && Def is ForceAbilityDef forceDef)
                 {
                     if (forceDef?.requiredAlignmentType != ForceAlignmentType.None)
                     {
                         if (forceDef?.requiredAlignmentType != ForceUtility.GetForceAlignmentType(Pawn))
                         {
-                            reason = "PJ_WrongAlignment".Translate(this.Pawn.LabelShort);
+                            reason = "PJ_WrongAlignment".Translate(Pawn.LabelShort);
                             return false;
                         }
                     }
                     if (ForceUser?.ForcePool != null)
                     {
                         if (forceDef?.forcePoolCost > 0 &&
-                            ActualForceCost > ForceUtility.GetForcePool(this.Pawn)?.CurLevel)
+                            ActualForceCost > ForceUtility.GetForcePool(Pawn)?.CurLevel)
                         {
-                            reason = "PJ_DrainedForcePool".Translate(this.Pawn.LabelShort);
+                            reason = "PJ_DrainedForcePool".Translate(Pawn.LabelShort);
                             return false;
                         }
                     }
-                    if (this.AbilityUser?.AbilityUser != null)
+                    if (AbilityUser?.AbilityUser != null)
                     {
-                        if (this.AbilityUser?.AbilityUser?.apparel != null)
+                        if (AbilityUser?.AbilityUser?.apparel != null)
                         {
-                            if (this.AbilityUser?.AbilityUser?.apparel?.WornApparel != null && this.AbilityUser?.AbilityUser?.apparel?.WornApparelCount > 0)
+                            if (AbilityUser?.AbilityUser?.apparel?.WornApparel != null && AbilityUser?.AbilityUser?.apparel?.WornApparelCount > 0)
                             {
-                                if (this.AbilityUser?.AbilityUser?.apparel?.WornApparel?.FirstOrDefault((Apparel x) => x.def == ThingDefOf.Apparel_ShieldBelt) != null)
+                                if (AbilityUser?.AbilityUser?.apparel?.WornApparel?.FirstOrDefault((Apparel x) => x.def == ThingDefOf.Apparel_ShieldBelt) != null)
                                 {
-                                    reason = "PJ_UsingShieldBelt".Translate(this.Pawn.LabelShort);
+                                    reason = "PJ_UsingShieldBelt".Translate(Pawn.LabelShort);
                                     return false;
                                 }
                             }
@@ -183,13 +180,13 @@ namespace ProjectJedi
         public override bool CanOverpowerTarget(AbilityContext context, LocalTargetInfo target, out string reason)
         {
             reason = "";
-            if (target.Thing is ProjectJedi.PawnGhost)
+            if (target.Thing is PawnGhost)
             {
                 Messages.Message("PJ_ForceResisted".Translate(new object[]
                     {
                         target.Thing.LabelShort,
                         AbilityUser.AbilityUser.LabelShort,
-                        this.Def.label
+                        Def.label
                         
                     }), MessageTypeDefOf.NegativeEvent);
                 return false;

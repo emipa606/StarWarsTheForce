@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Verse;
 
 namespace ProjectJedi
@@ -26,9 +23,9 @@ namespace ProjectJedi
 
         public void ExposeData()
         {
-            Scribe_Values.Look<string>(ref label, "label", "default");
-            Scribe_Values.Look<string>(ref desc, "desc", "default");
-            Scribe_Values.Look<int>(ref level, "level", 0);
+            Scribe_Values.Look(ref label, "label", "default");
+            Scribe_Values.Look(ref desc, "desc", "default");
+            Scribe_Values.Look(ref level, "level", 0);
         }
     }
 }

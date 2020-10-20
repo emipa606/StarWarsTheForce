@@ -1,5 +1,4 @@
-﻿using System;
-using Verse;
+﻿using Verse;
 using Verse.AI;
 using RimWorld;
 
@@ -14,8 +13,8 @@ namespace ProjectJedi
         public override ThinkNode DeepCopy(bool resolve = true)
         {
             ThinkNode_ModNeedPercentageAbove ThinkNode_ModNeedPercentageAbove = (ThinkNode_ModNeedPercentageAbove)base.DeepCopy(resolve);
-            ThinkNode_ModNeedPercentageAbove.need = this.need;
-            ThinkNode_ModNeedPercentageAbove.threshold = this.threshold;
+            ThinkNode_ModNeedPercentageAbove.need = need;
+            ThinkNode_ModNeedPercentageAbove.threshold = threshold;
             return ThinkNode_ModNeedPercentageAbove;
         }
 
@@ -28,9 +27,9 @@ namespace ProjectJedi
            //Log.Message("3");
             if (pawn.needs == null) return false;
            //Log.Message("4");
-            if (pawn.needs.TryGetNeed(this.need) == null) return false;
+            if (pawn.needs.TryGetNeed(need) == null) return false;
            //Log.Message("5");
-            return pawn.needs.TryGetNeed(this.need).CurLevelPercentage > this.threshold;
+            return pawn.needs.TryGetNeed(need).CurLevelPercentage > threshold;
         }
     }
 }
