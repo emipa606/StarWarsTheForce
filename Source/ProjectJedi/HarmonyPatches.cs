@@ -60,7 +60,7 @@ namespace ProjectJedi
         /// Add Force XP every time a pawn learns a skill.
         public static void Learn_PostFix(SkillRecord __instance, float xp, bool direct = false)
         {
-            Pawn pawn = (Pawn) AccessTools.Field(typeof(SkillRecord), "pawn").GetValue(__instance);
+            Pawn pawn = (Pawn)AccessTools.Field(typeof(SkillRecord), "pawn").GetValue(__instance);
             if (xp > 0 && pawn?.TryGetComp<CompForceUser>() is CompForceUser compForce &&
                 Find.TickManager.TicksGame > compForce?.ForceData?.TicksUntilXPGain)
             {
@@ -103,7 +103,7 @@ namespace ProjectJedi
         // Verse.PawnRenderer
         public static void DrawEquipment_PostFix(PawnRenderer __instance, Vector3 rootLoc)
         {
-            Pawn pawn = (Pawn) AccessTools.Field(typeof(PawnRenderer), "pawn").GetValue(__instance);
+            Pawn pawn = (Pawn)AccessTools.Field(typeof(PawnRenderer), "pawn").GetValue(__instance);
             if (pawn.health?.hediffSet?.hediffs != null && pawn.health.hediffSet.hediffs.Count > 0)
             {
                 Hediff shieldHediff =
@@ -118,7 +118,7 @@ namespace ProjectJedi
         // Verse.Pawn_HealthTracker
         public static bool PreApplyDamage_PreFix(Pawn_HealthTracker __instance, DamageInfo dinfo, out bool absorbed)
         {
-            Pawn pawn = (Pawn) AccessTools.Field(typeof(Pawn_HealthTracker), "pawn").GetValue(__instance);
+            Pawn pawn = (Pawn)AccessTools.Field(typeof(Pawn_HealthTracker), "pawn").GetValue(__instance);
             if (pawn != null)
             {
                 if (pawn.health.hediffSet.hediffs != null && pawn.health.hediffSet.hediffs.Count > 0)
@@ -158,7 +158,7 @@ namespace ProjectJedi
             }
             else
             {
-                float newAccuracy = (float) (__result / 2);
+                float newAccuracy = (float)(__result / 2);
 
                 int accuracyPoints = compForce.ForceSkillLevel("PJ_LightsaberAccuracy");
                 if (accuracyPoints > 0)
@@ -183,14 +183,14 @@ namespace ProjectJedi
             }
             else
             {
-                int newDamage = (int) (dinfo.Amount / 2);
+                int newDamage = (int)(dinfo.Amount / 2);
 
                 int offensePoints = compForce.ForceSkillLevel("PJ_LightsaberOffense");
                 if (offensePoints > 0)
                 {
                     for (int i = 0; i < offensePoints; i++)
                     {
-                        newDamage += (int) (dinfo.Amount / 5);
+                        newDamage += (int)(dinfo.Amount / 5);
                     }
                 }
                 dinfo.SetAmount(newDamage);
@@ -204,8 +204,8 @@ namespace ProjectJedi
 
         public static void Notify_FactionHostilityChanged_PostFix(AttackTargetsCache __instance, Faction f1, Faction f2)
         {
-            Map map = (Map) AccessTools.Field(typeof(AttackTargetsCache), "map").GetValue(__instance);
-            PawnGhost ghost = (PawnGhost) map?.mapPawns.AllPawnsSpawned.FirstOrDefault((Pawn x) => x is PawnGhost);
+            Map map = (Map)AccessTools.Field(typeof(AttackTargetsCache), "map").GetValue(__instance);
+            PawnGhost ghost = (PawnGhost)map?.mapPawns.AllPawnsSpawned.FirstOrDefault((Pawn x) => x is PawnGhost);
             ghost?.FactionSetup();
         }
     }
