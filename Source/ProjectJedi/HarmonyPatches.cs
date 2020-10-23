@@ -146,82 +146,61 @@ namespace ProjectJedi
 
         public static int nonForceUserLightsaberDamage = 10;
 
-        public static void GetNonMissChance_PostFix(Verb_MeleeAttack __instance, LocalTargetInfo target,
-            ref float __result)
+        public static void GetNonMissChance_PostFix(Verb_MeleeAttack __instance, ref float __result)
         {
-            //if (target.Thing != null && target.Thing is Pawn)
-            //{
-            Pawn attacker = __instance.CasterPawn;
-            Pawn_EquipmentTracker pawn_EquipmentTracker = attacker?.equipment;
-            if (pawn_EquipmentTracker == null) return;
-            foreach (ThingWithComps thingWithComps in pawn_EquipmentTracker.AllEquipmentListForReading)
+            if (!(__instance.Caster is Pawn attacker)) return;
+            ThingWithComps weapon = __instance.EquipmentSource;
+            if (weapon == null || !IsSWSaber(weapon.def)) return;
+            CompForceUser compForce = attacker.GetComp<CompForceUser>();
+            if (compForce == null || !compForce.IsForceUser)
             {
-                if (thingWithComps?.def.IsMeleeWeapon == true && thingWithComps.def.defName.Contains("SWSaber_"))
-                {
-                    CompForceUser compForce = attacker.TryGetComp<CompForceUser>();
-                    if (compForce == null)
-                    {
-                        __result = 0.5f;
-                    }
-                    else if (!compForce.IsForceUser)
-                    {
-                        __result = 0.5f;
-                    }
-                    else
-                    {
-                        float newAccuracy = (float) (__result / 2);
-
-                        int accuracyPoints = compForce.ForceSkillLevel("PJ_LightsaberAccuracy");
-                        if (accuracyPoints > 0)
-                        {
-                            for (int i = 0; i < accuracyPoints; i++)
-                            {
-                                newAccuracy += 0.2f;
-                            }
-                        }
-                        __result = newAccuracy;
-                    }
-                }
+                __result = 0.5f;
             }
-            //}
-        }
-
-        public static void TakeDamage_PreFix(Thing __instance, ref DamageInfo dinfo)
-        {
-            Pawn attacker = dinfo.Instigator as Pawn;
-            Pawn_EquipmentTracker pawn_EquipmentTracker = attacker?.equipment;
-            if (pawn_EquipmentTracker == null) return;
-            foreach (ThingWithComps thingWithComps in pawn_EquipmentTracker.AllEquipmentListForReading)
+            else
             {
-                if (thingWithComps == null) continue;
-                if (!thingWithComps.def.IsMeleeWeapon) continue;
-                if (!thingWithComps.def.defName.Contains("SWSaber_")) continue;
-                CompForceUser compForce = attacker.TryGetComp<CompForceUser>();
-                if (compForce == null)
-                {
-                    dinfo.SetAmount(10);
-                }
-                else if (!compForce.IsForceUser)
-                {
-                    dinfo.SetAmount(10);
-                }
-                else
-                {
-                    int newDamage = (int) (dinfo.Amount / 2);
+                float newAccuracy = (float) (__result / 2);
 
-                    int offensePoints = compForce.ForceSkillLevel("PJ_LightsaberOffense");
-                    if (offensePoints > 0)
+                int accuracyPoints = compForce.ForceSkillLevel("PJ_LightsaberAccuracy");
+                if (accuracyPoints > 0)
+                {
+                    for (int i = 0; i < accuracyPoints; i++)
                     {
-                        for (int i = 0; i < offensePoints; i++)
-                        {
-                            newDamage += (int) (dinfo.Amount / 5);
-                        }
+                        newAccuracy += 0.2f;
                     }
-                    dinfo.SetAmount(newDamage);
                 }
+                __result = newAccuracy;
             }
         }
 
+        public static void TakeDamage_PreFix(ref DamageInfo dinfo)
+        {
+            if (!(dinfo.Instigator is Pawn attacker)) return;
+            if (!IsSWSaber(dinfo.Weapon)) return;
+            CompForceUser compForce = attacker.GetComp<CompForceUser>();
+            if (compForce == null || !compForce.IsForceUser)
+            {
+                dinfo.SetAmount(10);
+            }
+            else
+            {
+                int newDamage = (int) (dinfo.Amount / 2);
+
+                int offensePoints = compForce.ForceSkillLevel("PJ_LightsaberOffense");
+                if (offensePoints > 0)
+                {
+                    for (int i = 0; i < offensePoints; i++)
+                    {
+                        newDamage += (int) (dinfo.Amount / 5);
+                    }
+                }
+                dinfo.SetAmount(newDamage);
+            }
+        }
+
+        private static bool IsSWSaber(ThingDef weaponDef)
+        {
+            return weaponDef != null && weaponDef.IsMeleeWeapon && weaponDef.defName.Contains("SWSaber_");
+        }
 
         public static void Notify_FactionHostilityChanged_PostFix(AttackTargetsCache __instance, Faction f1, Faction f2)
         {
