@@ -1,6 +1,6 @@
-﻿using Verse;
+﻿using RimWorld;
+using Verse;
 using Verse.AI;
-using RimWorld;
 
 namespace ProjectJedi
 {
@@ -12,7 +12,7 @@ namespace ProjectJedi
 
         public override ThinkNode DeepCopy(bool resolve = true)
         {
-            ThinkNode_ModNeedPercentageAbove ThinkNode_ModNeedPercentageAbove = (ThinkNode_ModNeedPercentageAbove)base.DeepCopy(resolve);
+            var ThinkNode_ModNeedPercentageAbove = (ThinkNode_ModNeedPercentageAbove) base.DeepCopy(resolve);
             ThinkNode_ModNeedPercentageAbove.need = need;
             ThinkNode_ModNeedPercentageAbove.threshold = threshold;
             return ThinkNode_ModNeedPercentageAbove;
@@ -20,15 +20,31 @@ namespace ProjectJedi
 
         protected override bool Satisfied(Pawn pawn)
         {
-           //Log.Message("1");
-            if (need == null) return false;
-           //Log.Message("2");
-            if (pawn == null) return false;
-           //Log.Message("3");
-            if (pawn.needs == null) return false;
-           //Log.Message("4");
-            if (pawn.needs.TryGetNeed(need) == null) return false;
-           //Log.Message("5");
+            //Log.Message("1");
+            if (need == null)
+            {
+                return false;
+            }
+
+            //Log.Message("2");
+            if (pawn == null)
+            {
+                return false;
+            }
+
+            //Log.Message("3");
+            if (pawn.needs == null)
+            {
+                return false;
+            }
+
+            //Log.Message("4");
+            if (pawn.needs.TryGetNeed(need) == null)
+            {
+                return false;
+            }
+
+            //Log.Message("5");
             return pawn.needs.TryGetNeed(need).CurLevelPercentage > threshold;
         }
     }

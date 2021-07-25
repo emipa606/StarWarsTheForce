@@ -6,28 +6,36 @@ namespace ProjectJedi
 {
     public class ITab_Pawn_Force : ITab
     {
+        public ITab_Pawn_Force()
+        {
+            size = ForceCardUtility.ForceCardSize + (new Vector2(17f, 17f) * 2f);
+            labelKey = "PJ_TabForce";
+        }
+
         private Pawn PawnToShowInfoAbout
         {
             get
             {
                 Pawn pawn = null;
-                if (base.SelPawn != null)
+                if (SelPawn != null)
                 {
-                    pawn = base.SelPawn;
+                    pawn = SelPawn;
                 }
                 else
                 {
-                    if (base.SelThing is Corpse corpse)
+                    if (SelThing is Corpse corpse)
                     {
                         pawn = corpse.InnerPawn;
                     }
                 }
-                if (pawn == null)
+
+                if (pawn != null)
                 {
-                    Log.Error("Character tab found no selected pawn to display.");
-                    return null;
+                    return pawn;
                 }
-                return pawn;
+
+                Log.Error("Character tab found no selected pawn to display.");
+                return null;
             }
         }
 
@@ -35,26 +43,21 @@ namespace ProjectJedi
         {
             get
             {
-                if (base.SelPawn.story != null)
+                if (SelPawn.story != null)
                 {
-                    return (base.SelPawn.story.traits.HasTrait(ProjectJediDefOf.PJ_JediTrait) ||
-                        base.SelPawn.story.traits.HasTrait(ProjectJediDefOf.PJ_GrayTrait) ||
-                        base.SelPawn.story.traits.HasTrait(ProjectJediDefOf.PJ_SithTrait) ||
-                        base.SelPawn.story.traits.HasTrait(ProjectJediDefOf.PJ_ForceSensitive));
+                    return SelPawn.story.traits.HasTrait(ProjectJediDefOf.PJ_JediTrait) ||
+                           SelPawn.story.traits.HasTrait(ProjectJediDefOf.PJ_GrayTrait) ||
+                           SelPawn.story.traits.HasTrait(ProjectJediDefOf.PJ_SithTrait) ||
+                           SelPawn.story.traits.HasTrait(ProjectJediDefOf.PJ_ForceSensitive);
                 }
+
                 return false;
             }
         }
 
-        public ITab_Pawn_Force()
-        {
-            size = ForceCardUtility.ForceCardSize + new Vector2(17f, 17f) * 2f;
-            labelKey = "PJ_TabForce";
-        }
-
         protected override void FillTab()
         {
-            Rect rect = new Rect(17f, 17f, ForceCardUtility.ForceCardSize.x, ForceCardUtility.ForceCardSize.y);
+            var rect = new Rect(17f, 17f, ForceCardUtility.ForceCardSize.x, ForceCardUtility.ForceCardSize.y);
             ForceCardUtility.DrawForceCard(rect, PawnToShowInfoAbout);
         }
     }

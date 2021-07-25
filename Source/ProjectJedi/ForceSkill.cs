@@ -1,20 +1,18 @@
-﻿using System;
-using Verse;
+﻿using Verse;
 
 namespace ProjectJedi
 {
     public class ForceSkill : IExposable
     {
-        public string label;
         public string desc;
+        public string label;
         public int level;
 
         public ForceSkill()
         {
-
         }
 
-        public ForceSkill(String newLabel, String newDesc)
+        public ForceSkill(string newLabel, string newDesc)
         {
             label = newLabel;
             desc = newDesc;
@@ -25,7 +23,7 @@ namespace ProjectJedi
         {
             Scribe_Values.Look(ref label, "label", "default");
             Scribe_Values.Look(ref desc, "desc", "default");
-            Scribe_Values.Look(ref level, "level", 0);
+            Scribe_Values.Look(ref level, "level");
         }
     }
 }

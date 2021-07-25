@@ -5,35 +5,26 @@ namespace ProjectJedi
 {
     public class DamageWorker_ForceLeveled : DamageWorker
     {
-        private Pawn caster;
-        public Pawn Caster
-        {
-            get
-            {
-                return caster;
-            }
-            set
-            {
-                caster = value;
-            }
-        }
+        public Pawn Caster { get; set; }
 
         public virtual void ApprenticeEffect(Thing target)
         {
-           //Log.Message("Placeholder: Apprentice");
+            //Log.Message("Placeholder: Apprentice");
         }
+
         public virtual void AdeptEffect(Thing target)
         {
-           //Log.Message("Placeholder: Adept");
+            //Log.Message("Placeholder: Adept");
         }
+
         public virtual void MasterEffect(Thing target)
         {
-           //Log.Message("Placeholder: Master");
+            //Log.Message("Placeholder: Master");
         }
-        
+
         public override DamageResult Apply(DamageInfo dinfo, Thing victim)
         {
-            DamageResult result = new DamageResult
+            var result = new DamageResult
             {
                 totalDamageDealt = 0f
             };
@@ -43,8 +34,8 @@ namespace ProjectJedi
                 return result;
             }
 
-            int amount = (int)dinfo.Amount;
-            caster = dinfo.Instigator as Pawn;
+            var amount = (int) dinfo.Amount;
+            Caster = dinfo.Instigator as Pawn;
             switch (amount)
             {
                 case 1:
@@ -60,6 +51,7 @@ namespace ProjectJedi
                     Log.Error(def.label + " only works with damages 1, 2, or 3");
                     break;
             }
+
             return result;
         }
     }

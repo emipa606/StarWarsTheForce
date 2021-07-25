@@ -11,29 +11,24 @@ namespace ProjectJedi
             if (flyingThing != null)
             {
                 GenSpawn.Spawn(flyingThing, Position, Map);
-                if (launcher != null)
+                if (launcher is Pawn {equipment: { }} equipper)
                 {
-                    if (launcher is Pawn equipper)
+                    if (flyingThing is ThingWithComps flyingThingWithComps)
                     {
-                        if (equipper.equipment != null)
-                        {
-                            if (flyingThing is ThingWithComps flyingThingWithComps)
-                            {
-                                Equip(equipper, flyingThingWithComps);
-                            }
-                        }
+                        Equip(equipper, flyingThingWithComps);
                     }
                 }
             }
-            Destroy(DestroyMode.Vanish);
+
+            Destroy();
         }
 
         public void Equip(Pawn equipper, ThingWithComps thingWithComps)
         {
             if (thingWithComps.def.IsApparel)
             {
-                Apparel apparel = (Apparel)thingWithComps;
-                equipper.apparel.Wear(apparel, true);
+                var apparel = (Apparel) thingWithComps;
+                equipper.apparel.Wear(apparel);
                 if (equipper.outfits != null)
                 {
                     equipper.outfits.forcedHandler.SetForced(apparel, true);
@@ -44,18 +39,19 @@ namespace ProjectJedi
                 ThingWithComps thingWithComps2;
                 if (thingWithComps.def.stackLimit > 1 && thingWithComps.stackCount > 1)
                 {
-                    thingWithComps2 = (ThingWithComps)thingWithComps.SplitOff(1);
+                    thingWithComps2 = (ThingWithComps) thingWithComps.SplitOff(1);
                 }
                 else
                 {
                     thingWithComps2 = thingWithComps;
                     thingWithComps2.DeSpawn();
                 }
+
                 equipper.equipment.MakeRoomFor(thingWithComps2);
                 equipper.equipment.AddEquipment(thingWithComps2);
                 if (thingWithComps.def.soundInteract != null)
                 {
-                    thingWithComps.def.soundInteract.PlayOneShot(new TargetInfo(equipper.Position, equipper.Map, false));
+                    thingWithComps.def.soundInteract.PlayOneShot(new TargetInfo(equipper.Position, equipper.Map));
                 }
             }
         }
