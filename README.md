@@ -1,6 +1,6 @@
 # StarWarsTheForce
 
-![Image](https://i.imgur.com/WAEzk68.png)
+![Image](https://i.imgur.com/buuPQel.png)
 
 Update of Xen and Jecrells mod
 https://steamcommunity.com/sharedfiles/filedetails/?id=918226861
@@ -10,25 +10,16 @@ https://steamcommunity.com/sharedfiles/filedetails/?id=918226861
 - Added fixes to the lightsaber interaction, thanks lbmaian!
 - Added support for https://steamcommunity.com/sharedfiles/filedetails/?id=2451324814][SYR] Trait Value
 
-![Image](https://i.imgur.com/7Gzt3Rg.png)
+![Image](https://i.imgur.com/CN9Rs5X.png)
 
-
-[table]
-	[tr]
-		[td]https://invite.gg/Mlie]![Image](https://i.imgur.com/zdzzBrc.png)
-[/td]
-		[td]https://github.com/emipa606/StarWarsTheForce]![Image](https://i.imgur.com/kTkpTOE.png)
-[/td]
-	[/tr]
-[/table]
 	
-![Image](https://i.imgur.com/NOW7jU1.png)
+![Image](https://i.imgur.com/Z4GOv8H.png)
 
 
 # Adds RPG-leveling, alignment, and force powers to RimWorld.
 
 
-A17 GitHub Branch -&gt; https://github.com/jecrell/Star-Wars---The-Force/tree/A17
+A17 GitHub Branch - https://github.com/jecrell/Star-Wars---The-Force/tree/A17
 
 # ::::: NOTICE :::::
 ::::: THIS MOD REQUIRES JECSTOOLS ::::::
@@ -71,7 +62,7 @@ Jedi Master Ailan, Shane Malley, Dakota Pohlman, Falloutmonk, Slick Liquid, Thom
 
 
 - Static Quality Plus -- Disables Force XP.
-- Step away from the medicine - Characters can&apos;t be tended after force heal.
+- Step away from the medicine - Characters can't be tended after force heal.
 - Hand me that brick - Errors
 - Camping - Errors]
 - Leadership and Teachers - Makes Force XP go up too quickly
@@ -84,7 +75,7 @@ Jedi Master Ailan, Shane Malley, Dakota Pohlman, Falloutmonk, Slick Liquid, Thom
 Join us on Discord: https://discord.gg/aDjWBBk
 
 
-![Image](https://i.imgur.com/Rs6T6cr.png)
+![Image](https://i.imgur.com/PwoNOj4.png)
 
 
 

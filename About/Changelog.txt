@@ -1,5 +1,9 @@
 # Changelog for StarWarsTheForce
 
+1.4.1 - Last update, added end-of-life message.
+Used DeepL to update translations for ChineseSimplified, French, German, Japanese, Russian, Spanish
+
+
 1.0.4.0 - Updated for 1.3
 
 
