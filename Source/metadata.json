@@ -1,5 +1,17 @@
 {
   "Continued": true,
   "CanAdd": "0",
-  "CanRemove": "2"
+  "CanRemove": "2",
+  "LastXmlCleaning": "2025-08-01T11:42:01.9921183+02:00",
+  "SocialImageSet": true,
+  "Patches": true,
+  "Defs": true,
+  "Assemblies": true,
+  "LinesOfCode": 130377,
+  "LinesOfXML": 172032,
+  "SearchTags": [
+    " rpg",
+    " leveling"
+  ],
+  "PreviewVersion": "1.6"
 }

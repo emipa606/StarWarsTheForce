@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
   <PJ_ForceHealDamage.label>フォース回復</PJ_ForceHealDamage.label>
   <PJ_ForceHealDamage.deathMessage>{0}はフォースによって殺された。</PJ_ForceHealDamage.deathMessage>
