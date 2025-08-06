@@ -2,16 +2,17 @@
   "Continued": true,
   "CanAdd": "0",
   "CanRemove": "2",
-  "LastXmlCleaning": "2025-08-01T11:42:01.9921183+02:00",
+  "LastXmlCleaning": "2025-08-06T21:47:16.9051239+02:00",
   "SocialImageSet": true,
   "Patches": true,
   "Defs": true,
   "Assemblies": true,
-  "LinesOfCode": 130377,
+  "LinesOfCode": 130682,
   "LinesOfXML": 172032,
   "SearchTags": [
     " rpg",
     " leveling"
   ],
-  "PreviewVersion": "1.6"
+  "PreviewVersion": "1.6",
+  "CodeBaseSize": 86
 }

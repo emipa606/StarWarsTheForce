@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using AbilityUser;
 using RimWorld;
-using UnityEngine;
 using Verse;
 using Verse.Sound;
 
@@ -138,7 +137,7 @@ public class CompForceUser : CompAbilityUser
 
         set
         {
-            ForceData.Alignment = Mathf.Clamp(value, 0.0f, 1.0f);
+            ForceData.Alignment = Math.Clamp(value, 0f, 1.0f);
             if (ForceUserLevel > 0)
             {
                 UpdateAlignment();
@@ -256,7 +255,7 @@ public class CompForceUser : CompAbilityUser
             }
 
             SoundDef.Named("PJ_ForcePowersUnlocked").PlayOneShotOnCamera();
-            AlignmentValue = 0.5f;
+            ForceData.Alignment = 0.5f;
         }
         else
         {
@@ -365,7 +364,7 @@ public class CompForceUser : CompAbilityUser
         }
 
         // Jedi
-        var degree = 0;
+        var degree = 1;
 
         switch (ForceUserLevel)
         {
@@ -378,26 +377,21 @@ public class CompForceUser : CompAbilityUser
             case > 3:
                 degree = 2;
                 break;
-            case > 0:
-                degree = 1;
+        }
+
+        switch (ForceData.Alignment)
+        {
+            case > 0.75f:
+                Pawn.story.traits.GainTrait(new Trait(ProjectJediDefOf.PJ_JediTrait, degree, true));
                 break;
-        }
-
-        if (AlignmentValue > 0.75)
-        {
-            Pawn.story.traits.GainTrait(new Trait(ProjectJediDefOf.PJ_JediTrait, degree, true));
-        }
-
-        // Gray
-        else if (AlignmentValue >= 0.25 && AlignmentValue <= 0.75)
-        {
-            Pawn.story.traits.GainTrait(new Trait(ProjectJediDefOf.PJ_GrayTrait, degree, true));
-        }
-
-        // Sith
-        else
-        {
-            Pawn.story.traits.GainTrait(new Trait(ProjectJediDefOf.PJ_SithTrait, degree, true));
+            // Gray
+            case >= 0.25f and <= 0.75f:
+                Pawn.story.traits.GainTrait(new Trait(ProjectJediDefOf.PJ_GrayTrait, degree, true));
+                break;
+            // Sith
+            default:
+                Pawn.story.traits.GainTrait(new Trait(ProjectJediDefOf.PJ_SithTrait, degree, true));
+                break;
         }
     }
 
@@ -470,7 +464,7 @@ public class CompForceUser : CompAbilityUser
 
 
         base.CompTick();
-        if (Find.TickManager.TicksGame % 30 != 0)
+        if (!parent.IsHashIntervalTick(30))
         {
             return;
         }
@@ -518,7 +512,6 @@ public class CompForceUser : CompAbilityUser
 
         ForceData.ForcePowersInitialized = true;
         Initialize();
-        // if (ForceData.Alignment == 0.0f) ForceData.Alignment = 0.5f;
         resolveForceTab();
         resolveForcePowers();
         resolveForcePool();
@@ -565,7 +558,7 @@ public class CompForceUser : CompAbilityUser
         var jediTrait = Pawn.story.traits.GetTrait(ProjectJediDefOf.PJ_JediTrait);
         var sithTrait = Pawn.story.traits.GetTrait(ProjectJediDefOf.PJ_SithTrait);
         var grayTrait = Pawn.story.traits.GetTrait(ProjectJediDefOf.PJ_GrayTrait);
-        var unused = Pawn.story.traits.GetTrait(ProjectJediDefOf.PJ_ForceSensitive);
+        var forceSensitive = Pawn.story.traits.GetTrait(ProjectJediDefOf.PJ_ForceSensitive);
 
         if (jediTrait != null)
         {
@@ -743,94 +736,97 @@ public class CompForceUser : CompAbilityUser
             }
         }
 
-        if (sithTrait == null)
+        if (sithTrait != null)
         {
-            return;
+            switch (sithTrait.Degree)
+            {
+                case 0:
+                case 1:
+                    ForceData.Alignment = 0.3f;
+                    for (var o = 0; o < 4; o++)
+                    {
+                        ForceUserLevel += 1;
+                        ForceData.Skills.InRandomOrder().First(x => x.level < 4)
+                            .level++;
+                        ForceData.AbilityPoints -= 1;
+                    }
+
+                    for (var i = 0; i < 1; i++)
+                    {
+                        ForceUserLevel += 1;
+                        LevelUpPower(
+                            ForceData.PowersDark.InRandomOrder()
+                                .First(x => x.level < 2));
+                        ForceData.AbilityPoints -= 1;
+                    }
+
+                    return;
+                case 2:
+                    ForceData.Alignment = 0.2f;
+                    for (var o = 0; o < 5; o++)
+                    {
+                        ForceUserLevel += 1;
+                        ForceData.Skills.InRandomOrder().First(x => x.level < 4)
+                            .level++;
+                        ForceData.AbilityPoints -= 1;
+                    }
+
+                    for (var i = 0; i < 3; i++)
+                    {
+                        ForceUserLevel += 1;
+                        LevelUpPower(
+                            ForceData.PowersDark.InRandomOrder()
+                                .First(x => x.level < 2));
+                        ForceData.AbilityPoints -= 1;
+                    }
+
+                    return;
+                case 3:
+                    ForceData.Alignment = 0.15f;
+                    for (var o = 0; o < 6; o++)
+                    {
+                        ForceUserLevel += 1;
+                        ForceData.Skills.InRandomOrder().First(x => x.level < 4)
+                            .level++;
+                        ForceData.AbilityPoints -= 1;
+                    }
+
+                    for (var i = 0; i < 6; i++)
+                    {
+                        ForceUserLevel += 1;
+                        LevelUpPower(
+                            ForceData.PowersDark.InRandomOrder()
+                                .First(x => x.level < 2));
+                        ForceData.AbilityPoints -= 1;
+                    }
+
+                    return;
+                case 4:
+                    ForceData.Alignment = 0.0f;
+                    for (var o = 0; o < 10; o++)
+                    {
+                        ForceUserLevel += 1;
+                        ForceData.Skills.InRandomOrder().First(x => x.level < 4)
+                            .level++;
+                        ForceData.AbilityPoints -= 1;
+                    }
+
+                    for (var i = 0; i < 8; i++)
+                    {
+                        ForceUserLevel += 1;
+                        LevelUpPower(
+                            ForceData.PowersDark.InRandomOrder()
+                                .First(x => x.level < 2));
+                        ForceData.AbilityPoints -= 1;
+                    }
+
+                    return;
+            }
         }
 
-        switch (sithTrait.Degree)
+        if (forceSensitive != null)
         {
-            case 0:
-            case 1:
-                ForceData.Alignment = 0.3f;
-                for (var o = 0; o < 4; o++)
-                {
-                    ForceUserLevel += 1;
-                    ForceData.Skills.InRandomOrder().First(x => x.level < 4)
-                        .level++;
-                    ForceData.AbilityPoints -= 1;
-                }
-
-                for (var i = 0; i < 1; i++)
-                {
-                    ForceUserLevel += 1;
-                    LevelUpPower(
-                        ForceData.PowersDark.InRandomOrder()
-                            .First(x => x.level < 2));
-                    ForceData.AbilityPoints -= 1;
-                }
-
-                return;
-            case 2:
-                ForceData.Alignment = 0.2f;
-                for (var o = 0; o < 5; o++)
-                {
-                    ForceUserLevel += 1;
-                    ForceData.Skills.InRandomOrder().First(x => x.level < 4)
-                        .level++;
-                    ForceData.AbilityPoints -= 1;
-                }
-
-                for (var i = 0; i < 3; i++)
-                {
-                    ForceUserLevel += 1;
-                    LevelUpPower(
-                        ForceData.PowersDark.InRandomOrder()
-                            .First(x => x.level < 2));
-                    ForceData.AbilityPoints -= 1;
-                }
-
-                return;
-            case 3:
-                ForceData.Alignment = 0.15f;
-                for (var o = 0; o < 6; o++)
-                {
-                    ForceUserLevel += 1;
-                    ForceData.Skills.InRandomOrder().First(x => x.level < 4)
-                        .level++;
-                    ForceData.AbilityPoints -= 1;
-                }
-
-                for (var i = 0; i < 6; i++)
-                {
-                    ForceUserLevel += 1;
-                    LevelUpPower(
-                        ForceData.PowersDark.InRandomOrder()
-                            .First(x => x.level < 2));
-                    ForceData.AbilityPoints -= 1;
-                }
-
-                return;
-            case 4:
-                ForceData.Alignment = 0.0f;
-                for (var o = 0; o < 10; o++)
-                {
-                    ForceUserLevel += 1;
-                    ForceData.Skills.InRandomOrder().First(x => x.level < 4)
-                        .level++;
-                    ForceData.AbilityPoints -= 1;
-                }
-
-                for (var i = 0; i < 8; i++)
-                {
-                    ForceUserLevel += 1;
-                    LevelUpPower(
-                        ForceData.PowersDark.InRandomOrder()
-                            .First(x => x.level < 2));
-                    ForceData.AbilityPoints -= 1;
-                }
-
-                return;
+            ForceData.Alignment = Rand.Range(0.401f, 0.599f);
         }
     }
 

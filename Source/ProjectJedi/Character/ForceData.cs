@@ -10,7 +10,7 @@ public class ForceData : IExposable
     private readonly bool initialized = false;
     private int abilityPoints;
 
-    private float alignment;
+    private float alignment = 0.5f;
     public bool forcePowersInitialized;
     private int level;
     private Pawn pawn;

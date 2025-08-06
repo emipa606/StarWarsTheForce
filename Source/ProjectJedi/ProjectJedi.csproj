@@ -7,37 +7,37 @@
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
     <DebugType>None</DebugType>
     <LangVersion>latest</LangVersion>
-    <FileVersion>1.6.0</FileVersion>
+    <FileVersion>1.6.2</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Krafs.Rimworld.Ref">
-      <Version>1.6.4538-beta</Version>
+      <Version>1.6.4543</Version>
       <ExcludeAssets>runtime</ExcludeAssets>
       <IncludeAssets>compile; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-	  <PackageReference Include="Lib.Harmony">
-		  <Version>*</Version>
-		  <ExcludeAssets>runtime</ExcludeAssets>
-	  </PackageReference>
-	  <PackageReference Include="Mlie_Rimworld_VersionFromManifest" Version="*" />
+    <PackageReference Include="Lib.Harmony">
+      <Version>2.3.7-prerelease</Version>
+      <ExcludeAssets>runtime</ExcludeAssets>
+    </PackageReference>
+    <PackageReference Include="Mlie_Rimworld_VersionFromManifest" Version="*" />
     <Reference Include="SWSaber">
       <HintPath>..\..\..\StarWarsFullyFunctionalLightsabers\1.6\Assemblies\SWSaber.dll</HintPath>
       <Private>False</Private>
     </Reference>
-	  <Reference Include="AbilityUser">
-		  <HintPath>..\..\..\..\..\..\workshop\content\294100\3524247750\1.6\Assemblies\AbilityUser.dll</HintPath>
-		  <CopyLocal>False</CopyLocal>
-		  <Private>false</Private>
-	  </Reference>
-	  <Reference Include="CompSlotLoadable">
-		  <HintPath>..\..\..\..\..\..\workshop\content\294100\3524247750\1.6\Assemblies\CompSlotLoadable.dll</HintPath>
-		  <CopyLocal>False</CopyLocal>
-		  <Private>false</Private>
-	  </Reference>
-	  <Reference Include="CompActivatableEffect">
-		  <HintPath>..\..\..\..\..\..\workshop\content\294100\3524247750\1.6\Assemblies\CompActivatableEffect.dll</HintPath>
-		  <CopyLocal>False</CopyLocal>
-		  <Private>false</Private>
-	  </Reference>
+    <Reference Include="AbilityUser">
+      <HintPath>..\..\..\..\..\..\workshop\content\294100\3524247750\1.6\Assemblies\AbilityUser.dll</HintPath>
+      <CopyLocal>False</CopyLocal>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="CompSlotLoadable">
+      <HintPath>..\..\..\..\..\..\workshop\content\294100\3524247750\1.6\Assemblies\CompSlotLoadable.dll</HintPath>
+      <CopyLocal>False</CopyLocal>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="CompActivatableEffect">
+      <HintPath>..\..\..\..\..\..\workshop\content\294100\3524247750\1.6\Assemblies\CompActivatableEffect.dll</HintPath>
+      <CopyLocal>False</CopyLocal>
+      <Private>false</Private>
+    </Reference>
   </ItemGroup>
 </Project>
