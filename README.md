@@ -4,7 +4,7 @@
 
 Update of Xen and Jecrells mod https://steamcommunity.com/sharedfiles/filedetails/?id=918226861
 
-'**RimWorld 1.6 added improved support for [Asset Bundles](https://github.com/emipa606/AssetBuilder/blob/main/README.md) but to be able to use these the previous versions will not be included in this release.**.
+**RimWorld 1.6 added improved support for [Asset Bundles](https://github.com/emipa606/AssetBuilder/blob/main/README.md) but to be able to use these the previous versions will not be included in this release.**.
 
 ![Image](https://i.imgur.com/pufA0kM.png)
 	

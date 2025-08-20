@@ -45,7 +45,7 @@
       <tooltipShowHediffsToApply>true</tooltipShowHediffsToApply>
       <tooltipShowMentalStatesToApply>true</tooltipShowMentalStatesToApply>
       <hasStandardCommand>true</hasStandardCommand>
-      <defaultProjectile>PForceRage</defaultProjectile>
+      <!-- <defaultProjectile>PForceRage</defaultProjectile> -->
       <abilityDef>PJ_ForceRage_Apprentice</abilityDef>
       <warmupTime>1</warmupTime>
       <SecondsToRecharge>60.0</SecondsToRecharge>
@@ -83,7 +83,7 @@
       <tooltipShowHediffsToApply>true</tooltipShowHediffsToApply>
       <tooltipShowMentalStatesToApply>true</tooltipShowMentalStatesToApply>
       <hasStandardCommand>true</hasStandardCommand>
-      <defaultProjectile>PForceRage</defaultProjectile>
+      <!-- <defaultProjectile>PForceRage</defaultProjectile> -->
       <abilityDef>PJ_ForceRage_Adept</abilityDef>
       <warmupTime>1</warmupTime>
       <SecondsToRecharge>20.0</SecondsToRecharge>
@@ -122,7 +122,7 @@
       <tooltipShowHediffsToApply>true</tooltipShowHediffsToApply>
       <tooltipShowMentalStatesToApply>true</tooltipShowMentalStatesToApply>
       <hasStandardCommand>true</hasStandardCommand>
-      <defaultProjectile>PForceRage</defaultProjectile>
+      <!-- <defaultProjectile>PForceRage</defaultProjectile> -->
       <abilityDef>PJ_ForceRage_Master</abilityDef>
       <warmupTime>1</warmupTime>
       <SecondsToRecharge>10.0</SecondsToRecharge>

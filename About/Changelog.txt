@@ -1,5 +1,8 @@
 # Changelog for StarWarsTheForce
 
+1.6.3 - Fixed berserk power
+
+
 1.6.2 - No longer only generates sith
 
 
